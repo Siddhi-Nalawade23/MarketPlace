@@ -307,7 +307,7 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_content
   config.responder.redirect_status = :see_other
-  # ==> Configuration for :registerable
+    # ==> Configuration for :registerable
     config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise_jwt_secret_key
 
