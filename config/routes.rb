@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
     namespace :api do
     namespace :v1 do
-      resources :products, only: [:index, :show]
-      resources :categories, only: [:index]
-      resources :cart_items, only: [:index, :create, :update, :destroy]
-      resources :orders, only: [:index, :show, :create]
+      resources :products, only: [ :index, :show ]
+      resources :categories, only: [ :index ]
+      resources :cart_items, only: [ :index, :create, :update, :destroy ]
+      resources :orders, only: [ :index, :show, :create ]
     end
   end
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
