@@ -307,16 +307,16 @@ Devise.setup do |config|
   # Note: These might become the new default in future versions of Devise.
   config.responder.error_status = :unprocessable_content
   config.responder.redirect_status = :see_other
-
   # ==> Configuration for :registerable
-  
-config.jwt do |jwt|
+    config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise_jwt_secret_key
+
     jwt.dispatch_requests = [
-      ["POST", %r{^/api/v1/login$}]
+      [ "POST", %r{^/api/v1/login$} ]
     ]
+
     jwt.revocation_requests = [
-      ["DELETE", %r{^/api/v1/logout$}]
+      [ "DELETE", %r{^/api/v1/logout$} ]
     ]
     jwt.expiration_time = 1.day.to_i
   end
