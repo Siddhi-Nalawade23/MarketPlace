@@ -3,7 +3,8 @@ class User < ApplicationRecord
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable
+         :validatable,
+         :jwt_authenticatable, jwt_revocation_strategy: JwtDenylist
 
   has_many :orders, dependent: :destroy
   has_many :cart_items, dependent: :destroy
