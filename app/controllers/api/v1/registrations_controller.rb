@@ -6,14 +6,14 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   private
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :role ])
   end
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
       render json: {
         message: "Signed up successfully",
-        user: { id: resource.id, email: resource.email, name: resource.name }
+        user: { id: resource.id, email: resource.email, name: resource.name, role: resource.role }
       }, status: :ok
     else
       render json: { errors: resource.errors.full_messages }, status: :unprocessable_entity

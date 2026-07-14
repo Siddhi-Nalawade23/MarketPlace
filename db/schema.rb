@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_09_111717) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_13_112411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,6 +29,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_111717) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.decimal "amount"
+    t.bigint "buyer_id", null: false
+    t.datetime "created_at", null: false
+    t.string "invoice_number"
+    t.bigint "order_id", null: false
+    t.bigint "seller_id", null: false
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.index ["buyer_id"], name: "index_invoices_on_buyer_id"
+    t.index ["order_id"], name: "index_invoices_on_order_id"
+    t.index ["seller_id"], name: "index_invoices_on_seller_id"
   end
 
   create_table "jwt_denylists", force: :cascade do |t|
@@ -52,6 +66,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_111717) do
 
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "shipping_address"
+    t.string "shipping_city"
+    t.string "shipping_name"
+    t.string "shipping_phone"
+    t.string "shipping_pincode"
+    t.string "shipping_state"
     t.string "status", default: "pending", null: false
     t.decimal "total", precision: 10, scale: 2, default: "0.0", null: false
     t.datetime "updated_at", null: false
@@ -63,11 +83,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_111717) do
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.text "description"
+    t.string "image_url"
     t.string "name", null: false
     t.decimal "price", precision: 10, scale: 2, null: false
     t.integer "stock", default: 0, null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -86,8 +109,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_09_111717) do
 
   add_foreign_key "cart_items", "products"
   add_foreign_key "cart_items", "users"
+  add_foreign_key "invoices", "orders"
+  add_foreign_key "invoices", "users", column: "buyer_id"
+  add_foreign_key "invoices", "users", column: "seller_id"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
+  add_foreign_key "products", "users"
 end
