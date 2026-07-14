@@ -8,7 +8,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   def respond_with(resource, _opts = {})
     render json: {
       message: "Logged in successfully",
-      user: { id: resource.id, email: resource.email, name: resource.name }
+      user: { id: resource.id, email: resource.email, name: resource.name, role: resource.role }
     }, status: :ok
   end
 
