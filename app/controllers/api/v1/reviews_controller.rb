@@ -1,12 +1,12 @@
 class Api::V1::ReviewsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :update]
+  before_action :authenticate_user!, only: [ :create, :update ]
   before_action :set_product
-  before_action :set_review, only: [:update]
+  before_action :set_review, only: [ :update ]
 
   # GET /api/v1/products/:product_id/reviews
   def index
     reviews = @product.reviews.includes(:user).order(created_at: :desc)
-    render json: reviews, include: { user: { only: [:id, :name] } }
+    render json: reviews, include: { user: { only: [ :id, :name ] } }
   end
 
   # POST /api/v1/products/:product_id/reviews
