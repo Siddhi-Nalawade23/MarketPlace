@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :products do
-        resources :reviews, only: [ :index, :create, :update ]
+        resources :reviews, only: [:index, :create, :update]
+      end
+      resources :reviews, only: [] do
+        resource :reply, only: [:create, :update], controller: "review_replies"
       end
       resources :categories, only: [ :index ]
       resources :cart_items, only: [ :index, :create, :update, :destroy ]

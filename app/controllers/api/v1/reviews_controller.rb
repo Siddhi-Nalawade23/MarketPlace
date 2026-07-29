@@ -5,8 +5,11 @@ class Api::V1::ReviewsController < ApplicationController
 
   # GET /api/v1/products/:product_id/reviews
   def index
-    reviews = @product.reviews.includes(:user).order(created_at: :desc)
-    render json: reviews, include: { user: { only: [ :id, :name ] } }
+    reviews = @product.reviews.includes(:user, :reply).order(created_at: :desc)
+    render json: reviews, include: {
+    user: { only: [:id, :name] },
+    reply: { include: { seller: { only: [:id, :name] } } }
+  }
   end
 
   # POST /api/v1/products/:product_id/reviews

@@ -1,6 +1,7 @@
 class Review < ApplicationRecord
   belongs_to :product
   belongs_to :user
+  has_one :reply, class_name: "ReviewReply", dependent: :destroy
 
   validates :comment, presence: true
   validates :rating, inclusion: { in: 1..5 }, allow_nil: true
