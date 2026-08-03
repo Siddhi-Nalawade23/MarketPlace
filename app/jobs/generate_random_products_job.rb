@@ -27,7 +27,7 @@ class GenerateRandomProductsJob < ApplicationJob
     products = Array.new(count) do
       template = templates.sample
 
-      variant_suffix = ["", " Pro", " Plus", " Max", " Lite", " 2.0", " Edition"].sample
+      variant_suffix = [ "", " Pro", " Plus", " Max", " Lite", " 2.0", " Edition" ].sample
       name = "#{template["brand"] || template["category"].to_s.titleize} #{template["title"]}#{variant_suffix}".strip
 
       base_price = template["price"].to_f
