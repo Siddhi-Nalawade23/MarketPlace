@@ -7,8 +7,8 @@ class Api::V1::ReviewsController < ApplicationController
   def index
     reviews = @product.reviews.includes(:user, :reply).order(created_at: :desc)
     render json: reviews, include: {
-    user: { only: [:id, :name] },
-    reply: { include: { seller: { only: [:id, :name] } } }
+    user: { only: [ :id, :name ] },
+    reply: { include: { seller: { only: [ :id, :name ] } } }
   }
   end
 

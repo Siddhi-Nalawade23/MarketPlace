@@ -4,8 +4,19 @@ class Api::V1::ProductsController < ApplicationController
   before_action :set_product, only: [ :show, :update, :destroy ]
 
   def index
+   if params[:search].present?
+    search = params[:search].strip.downcase
+    cache_key = "products:search:#{search}"
+
+    products = CachingService.fetch(cache_key) do
+      Product.where("LOWER(name) LIKE ?", "%#{search}%").as_json
+    end
+
+    render json: products
+   else
     render json: Product.all
-  end
+   end
+ end
 
   def show
     render json: @product
