@@ -66,3 +66,7 @@ end
 gem "rack-cors"
 gem "prawn"
 gem "prawn-table"
+
+group :development, :test do
+  gem "rspec-rails"
+end

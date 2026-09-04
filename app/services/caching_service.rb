@@ -11,7 +11,7 @@ class CachingService
     value ? JSON.parse(value) : nil
   end
 
-  def self.set(key, value, expiry = 5.minutes)
+  def self.set(key, value, expiry = 20.minutes)
     redis.set(key, value.to_json, ex: expiry.to_i)
   end
 
@@ -19,7 +19,7 @@ class CachingService
     redis.del(key)
   end
 
-  def self.fetch(key, expiry = 5.minutes)
+  def self.fetch(key, expiry = 20.minutes)
     cached = get(key)
     return cached unless cached.nil?
 
